@@ -1,0 +1,14 @@
+#Fat Jar Configuration File
+#Fri Apr 21 20:56:54 CST 2017
+onejar.license.required=true
+manifest.classpath=
+manifest.removesigners=true
+onejar.checkbox=false
+jarname=PatchConfig_fat.jar
+manifest.mergeall=true
+manifest.mainclass=com.bolin.Main
+manifest.file=<createnew>
+jarname.isextern=false
+onejar.expand=
+excludes=
+includes=
