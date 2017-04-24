@@ -145,12 +145,6 @@ public class ConfigFileUtil {
 		document.createXml(targetXml, targetXmlDocument);
 	}
 	
-	/*public static void main(String[] args) {
-		ConfigFileUtil util = new ConfigFileUtil();
-		//util.replaceXml("E:\\deploy\\配置文件\\126\\daps\\web.xml", "E:\\deploy\\126\\20170104\\daps\\WEB-INF\\web.xml");
-		util.replaceProperties("E:\\deploy\\配置文件\\126\\daps\\sys.properties", "E:\\deploy\\126\\20170104\\daps\\WEB-INF\\classes\\sys.properties");
-	}*/
-
 	/**
 	 * 替换properties文件
 	 * @author bolin
@@ -166,7 +160,7 @@ public class ConfigFileUtil {
 		CommentedProperties sourcePropertiesFile = new CommentedProperties();
 		try {
 			InputStream in = new FileInputStream(new File(sourceProperties));
-			sourcePropertiesFile.load(in);
+			sourcePropertiesFile.load(in, "utf-8");
 			in.close();
 		}
 		catch (Exception e) {
@@ -176,7 +170,7 @@ public class ConfigFileUtil {
 		CommentedProperties targetPropertiesFile = new CommentedProperties();
 		try {
 			InputStream in = new FileInputStream(new File(targetProperties));
-			targetPropertiesFile.load(in);
+			targetPropertiesFile.load(in, "utf-8");
 			in.close();
 		}
 		catch (Exception e) {
@@ -203,7 +197,7 @@ public class ConfigFileUtil {
 		
 		try {
 			OutputStream out = new FileOutputStream(targetFile);
-			targetPropertiesFile.store(out, null);
+			targetPropertiesFile.store(out, "utf-8", null);
 			out.flush();
 			out.close();
 		}
@@ -211,4 +205,5 @@ public class ConfigFileUtil {
 			e.printStackTrace();
 		}
 	}
+
 }

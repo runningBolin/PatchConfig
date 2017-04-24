@@ -224,8 +224,8 @@ public class CommentedProperties{
 	 * @param comment 属性表说明
 	 * @throws IOException
 	 */
-	public void store(OutputStream out, String comment) throws IOException {
-		store0(new BufferedWriter(new OutputStreamWriter(out, "utf-8")),comment, true);
+	public void store(OutputStream out, String charset, String comment) throws IOException {
+		store0(new BufferedWriter(new OutputStreamWriter(out, charset)),comment, true);
 	}
 
 	/**

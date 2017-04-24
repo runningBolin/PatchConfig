@@ -37,6 +37,8 @@ public class Main {
 	private JButton startReplaceBtn;
 	private JTextArea logArea;
 
+	private final String[] removedJars = new String[]{"jsp-api", "servlet"};
+	
 	/**
 	 * Launch the application.
 	 */
@@ -81,10 +83,11 @@ public class Main {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				JFileChooser addChooser = new JFileChooser("E:\\");
+				JFileChooser addChooser = new JFileChooser("E:\\deploy");
+				addChooser.setDialogTitle("选择项目文件目录");
 				addChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-				int returnval=addChooser.showOpenDialog(frame);
-                if(returnval==JFileChooser.APPROVE_OPTION) 
+				int returnval = addChooser.showOpenDialog(frame);
+                if(returnval == JFileChooser.APPROVE_OPTION) 
                 { 
                     File file = addChooser.getSelectedFile();
                     String str = file.getPath(); 
@@ -114,7 +117,8 @@ public class Main {
 		choseConfigFilePathBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JFileChooser addChooser = new JFileChooser("E:\\");
+				JFileChooser addChooser = new JFileChooser("E:\\deploy\\配置文件");
+				addChooser.setDialogTitle("选择配置文件目录");
 				addChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 				int returnval=addChooser.showOpenDialog(frame);
                 if(returnval==JFileChooser.APPROVE_OPTION) 
@@ -178,7 +182,7 @@ public class Main {
 				}
 			}
 		});
-		startReplaceBtn.setBounds(23, 86, 105, 23);
+		startReplaceBtn.setBounds(23, 86, 128, 23);
 		frame.getContentPane().add(startReplaceBtn);
 		
 		logArea = new JTextArea();
@@ -199,18 +203,29 @@ public class Main {
 					return;
 				}
 				logArea.append(now() + "开始删除jar文件...\n");
-				File projectFileDir = new File(projectFilePath);
-				ConfigFileUtil util = new ConfigFileUtil();
-				String findResultStr = util.find(projectFilePath, "");
-        		
+				String jarDir = projectFilePath + File.separator + "WEB-INF" + File.separator + "lib";
+				File jarFileDir = new File(jarDir);
+				
+				File[] jars = jarFileDir.listFiles();
+				if(jars.length > 0){
+					for ( File jar : jars ) {
+						if(StringUtils.contains(jar.getName(), "jsp-api") || 
+						   StringUtils.contains(jar.getName(), "servlet-api")){
+							logArea.append(now() + "删除jar：" + jar.getName());
+							jar.delete();
+						}
+					}
+				}else{
+					logArea.append("无需要删除的jar文件！");
+				}
         	}
         });
-        removeJarBtn.setBounds(138, 86, 105, 23);
+        removeJarBtn.setBounds(158, 86, 105, 23);
         frame.getContentPane().add(removeJarBtn);
         frame.setVisible(true);
 	}
 	
 	private String now(){
-		return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+		return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()) + " ";
 	}
 }
